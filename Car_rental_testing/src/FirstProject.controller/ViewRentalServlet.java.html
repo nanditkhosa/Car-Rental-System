@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ViewRentalServlet.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 1, 2018 2:51:35 PM)</a> &gt; <a href="../../index.html" class="el_group">Car rental testing</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">FirstProject.controller</a> &gt; <span class="el_source">ViewRentalServlet.java</span></div><h1>ViewRentalServlet.java</h1><pre class="source lang-java linenums">package FirstProject.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import Car_Rental_Util.sqlconnector;
+import FirstProject.model.ViewReportDAO;
+
+<span class="fc" id="L21">public class ViewRentalServlet extends HttpServlet {</span>
+	 private static final long serialVersionUID = 1L;
+	 static String temp;
+	 
+ protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  // TODO Auto-generated method stub
+<span class="fc" id="L27">  response.setContentType(&quot;text/html&quot;);</span>
+<span class="fc" id="L28">  PrintWriter out = response.getWriter();</span>
+<span class="fc" id="L29">  PreparedStatement qry = null;</span>
+<span class="fc" id="L30">  ResultSet qrs = null;</span>
+  
+<span class="fc" id="L32">	  Connection conn = null;</span>
+<span class="fc" id="L33">      PreparedStatement pst = null;</span>
+<span class="fc" id="L34">      ResultSet rs = null;</span>
+
+   // inserting data into mysql database 
+   // create a test database and student table before running this to create table
+   //create table student(name varchar(100), userName varchar(100), pass varchar(100), addr varchar(100), age int, qual varchar(100), percent varchar(100), year varchar(100));
+      try{
+      	
+<span class="fc" id="L41">      	conn=sqlconnector.connect();</span>
+<span class="fc" id="L42">      	String username=(String) request.getSession().getAttribute(&quot;name&quot;);</span>
+      	
+<span class="fc" id="L44">      pst = conn</span>
+<span class="fc" id="L45">              .prepareStatement(&quot;SELECT car_name,user_name,start_date,start_time,end_date,end_time,reservation_id FROM car_rental_testing.reservations rs, car_rental_testing.cars cr where rs.car_id=cr.car_id and rs.user_name='&quot;+username+&quot;'&quot;);</span>
+      //pst.setString(1, name);
+      //pst.setString(2, pass);
+      
+
+<span class="fc" id="L50">      rs = pst.executeQuery();</span>
+      
+<span class="fc" id="L52">      ArrayList&lt;ViewReportDAO&gt; mylist=new ArrayList&lt;ViewReportDAO&gt;(); </span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">      while(rs.next())</span>
+      { 
+<span class="fc" id="L55">    	  ViewReportDAO obj= new ViewReportDAO();</span>
+<span class="fc" id="L56">    	  obj.setCar_name(rs.getString(1));</span>
+<span class="fc" id="L57">    	  obj.setUser_name(rs.getString(2));</span>
+<span class="fc" id="L58">    	  obj.setStart_date(rs.getString(3));</span>
+<span class="fc" id="L59">    	  obj.setStart_time(rs.getString(4));</span>
+<span class="fc" id="L60">    	  obj.setClose_date(rs.getString(5));</span>
+<span class="fc" id="L61">    	  obj.setClose_time(rs.getString(6));</span>
+<span class="fc" id="L62">    	  obj.setReservation_id(rs.getInt(7));</span>
+<span class="fc" id="L63">    	  mylist.add(obj);   	</span>
+<span class="fc" id="L64">    	  System.out.println(rs.getString(1));</span>
+      }
+<span class="fc" id="L66">      request.setAttribute(&quot;queryResults&quot;, mylist);</span>
+      
+<span class="fc" id="L68">      qry = conn.prepareStatement(&quot;select role_id from user_roles where user_name = ?&quot;);</span>
+<span class="fc" id="L69">      qry.setString(1, username);</span>
+<span class="fc" id="L70">      qrs = qry.executeQuery();</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">      while(qrs.next()){</span>
+<span class="fc" id="L72">    	   temp = qrs.getString(1);</span>
+  
+<span class="fc" id="L74">      qry = conn.prepareStatement(&quot;select role_name from roles where role_id = ?&quot;);</span>
+<span class="fc" id="L75">      qry.setString(1, temp);</span>
+<span class="fc" id="L76">      qrs = qry.executeQuery();</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">      while(qrs.next()){</span>
+<span class="fc" id="L78">    	   temp = qrs.getString(1);</span>
+
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">	if(temp.equals(&quot;Rental Manager&quot;))</span>
+	{
+<span class="nc" id="L82">        RequestDispatcher rd=request.getRequestDispatcher(&quot;ViewRental.jsp&quot;);  </span>
+<span class="nc" id="L83">        rd.forward(request,response);  </span>
+<span class="nc" id="L84">    	}</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">    	else if(temp.equals(&quot;User&quot;))</span>
+    	{
+<span class="fc" id="L87">        RequestDispatcher rd=request.getRequestDispatcher(&quot;ViewUserBookings.jsp&quot;);  </span>
+<span class="fc" id="L88">        rd.forward(request,response);  </span>
+    	}	
+<span class="fc" id="L90">			out.print(&quot;&lt;p style=\&quot;color:red\&quot;&gt;Record Successfully Updated&lt;/p&gt;&quot;); </span>
+      }
+      }
+<span class="fc" id="L93">      pst.close();</span>
+<span class="fc" id="L94">      conn.close();</span>
+
+<span class="pc" id="L96">  } catch (Exception e) {</span>
+<span class="nc" id="L97">      System.out.println(e);</span>
+  } finally {
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">      if (conn != null) {</span>
+          try {
+<span class="fc" id="L101">              conn.close();</span>
+<span class="pc" id="L102">          } catch (SQLException e) {</span>
+<span class="nc" id="L103">              e.printStackTrace();</span>
+          }
+      }
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">      if (pst != null) {</span>
+          try {
+<span class="fc" id="L108">              pst.close();</span>
+<span class="pc" id="L109">          } catch (SQLException e) {</span>
+<span class="nc" id="L110">              e.printStackTrace();</span>
+          }
+      }
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">      if (rs != null) {</span>
+          try {
+<span class="fc" id="L115">              rs.close();</span>
+<span class="pc" id="L116">          } catch (SQLException e) {</span>
+<span class="nc" id="L117">              e.printStackTrace();</span>
+          }
+      }
+  }
+ 
+
+<span class="fc" id="L123"> }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 1, 2018 2:51:35 PM)</div></body></html>

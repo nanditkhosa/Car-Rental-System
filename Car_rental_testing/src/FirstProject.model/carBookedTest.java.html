@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>carBookedTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 1, 2018 2:51:35 PM)</a> &gt; <a href="../../index.html" class="el_group">Car rental testing</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">FirstProject.model</a> &gt; <span class="el_source">carBookedTest.java</span></div><h1>carBookedTest.java</h1><pre class="source lang-java linenums">package FirstProject.model;
+
+
+import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import junitparams.FileParameters;
+import junitparams.JUnitParamsRunner;
+
+
+@RunWith(JUnitParamsRunner.class)
+<span class="fc" id="L19">public class carBookedTest {</span>
+	carBooked carbooktest;
+	
+	@Before
+	public void setUp() throws Exception {
+		//instantiate variable here
+<span class="fc" id="L25">		carbooktest = new carBooked();</span>
+<span class="fc" id="L26">	}</span>
+	
+	@Test
+	@FileParameters(&quot;src/csv/carBooked.csv&quot;)
+	public void test(String cardnumber, String cvv,String kmonth,String kyear,boolean hasErrors) throws ServletException, IOException {
+		
+<span class="fc" id="L32">		boolean result=carbooktest.setErrorMsg(cardnumber, cvv, kmonth, kyear);</span>
+<span class="fc" id="L33">		assertEquals(hasErrors,result);</span>
+		
+<span class="fc" id="L35">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 1, 2018 2:51:35 PM)</div></body></html>

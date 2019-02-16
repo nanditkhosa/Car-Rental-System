@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CompleteBookingServlet.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 1, 2018 2:51:35 PM)</a> &gt; <a href="../../index.html" class="el_group">Car rental testing</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">FirstProject.controller</a> &gt; <span class="el_source">CompleteBookingServlet.java</span></div><h1>CompleteBookingServlet.java</h1><pre class="source lang-java linenums">package FirstProject.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import Car_Rental_Util.sqlconnector;
+import FirstProject.model.LoginDAO;
+import Car_Rental_Util.sqlconnector;
+
+<span class="fc" id="L22">public class CompleteBookingServlet extends HttpServlet {</span>
+	 private static final long serialVersionUID = 1L;
+	 static String temp;
+	// int gps;
+	//int onstar,siriusxm,clubmember;
+	 
+ @SuppressWarnings(&quot;resource&quot;)
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  // TODO Auto-generated method stub
+<span class="fc" id="L31">  response.setContentType(&quot;text/html&quot;);</span>
+<span class="fc" id="L32">  String username=(String) request.getSession().getAttribute(&quot;name&quot;);</span>
+<span class="fc" id="L33">  PrintWriter out = response.getWriter();</span>
+<span class="fc" id="L34">  String has_gps = request.getParameter(&quot;gps&quot;);</span>
+//  if(has_gps==&quot;1&quot;)
+//  {
+//	   gps=1;
+//  }
+  
+	  
+<span class="fc" id="L41">  String has_on_star = request.getParameter(&quot;onstar&quot;);</span>
+//  if(has_on_star==&quot;2&quot;)
+//  {
+//	   onstar=1;
+//  } 
+<span class="fc" id="L46">  String has_sirius_xm = request.getParameter(&quot;siriusxm&quot;);</span>
+//  if(has_sirius_xm==&quot;3&quot;)
+//  {
+//	   siriusxm=1;
+//  }
+<span class="fc" id="L51">  String is_arlington_club_member = request.getParameter(&quot;clubmember&quot;);</span>
+//  if(is_arlington_club_member==&quot;4&quot;)
+//  {
+//	   clubmember=1;
+//  }
+<span class="fc" id="L56">  String start_date = request.getParameter(&quot;pickupdate&quot;);</span>
+<span class="fc" id="L57">  String start_time = request.getParameter(&quot;pickuptime&quot;);</span>
+<span class="fc" id="L58">  String end_date = request.getParameter(&quot;dropoffdate&quot;);</span>
+<span class="fc" id="L59">  String end_time = request.getParameter(&quot;dropofftime&quot;);</span>
+<span class="fc" id="L60">  String car_id = request.getParameter(&quot;car_id&quot;);</span>
+<span class="fc" id="L61">  String car_name = request.getParameter(&quot;car_name&quot;);</span>
+<span class="fc" id="L62">  String capacity = request.getParameter(&quot;capacity&quot;);</span>
+<span class="fc" id="L63">  String amount = request.getParameter(&quot;amount&quot;);</span>
+<span class="fc" id="L64">  String user_name=(String) request.getSession().getAttribute(&quot;name&quot;);</span>
+<span class="fc" id="L65">  PreparedStatement qry = null;</span>
+<span class="fc" id="L66">  ResultSet qrs = null;</span>
+
+  // validate given input
+<span class="pc bpc" id="L69" title="6 of 12 branches missed.">  if (start_time.isEmpty()|| end_date.isEmpty()|| end_time.isEmpty()|| car_id.isEmpty()|| car_name.isEmpty()|| capacity.isEmpty()) {</span>
+<span class="nc" id="L70">   RequestDispatcher rd = request.getRequestDispatcher(&quot;CompleteBooking.jsp&quot;);</span>
+<span class="nc" id="L71">   out.println(&quot;&lt;font color=red&gt;Please fill all the fields&lt;/font&gt;&quot;);</span>
+<span class="nc" id="L72">   rd.include(request, response);</span>
+<span class="nc" id="L73">  } else {</span>
+<span class="fc" id="L74">	  Connection conn = null;</span>
+<span class="fc" id="L75">      PreparedStatement pst = null;</span>
+<span class="fc" id="L76">      ResultSet rs = null;</span>
+
+   // inserting data into mysql database 
+   // create a test database and student table before running this to create table
+   //create table student(name varchar(100), userName varchar(100), pass varchar(100), addr varchar(100), age int, qual varchar(100), percent varchar(100), year varchar(100));
+   try {
+	   
+<span class="fc" id="L83">	   	   conn=sqlconnector.connect();</span>
+
+<span class="fc" id="L85">           pst = conn.prepareStatement(&quot;INSERT INTO car_rental_testing.reservations ( car_id, user_name, start_date, start_time, end_date, end_time, has_gps, has_on_star, has_sirius_xm, is_arlington_club_member, base_cost, tax, discount, total_cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, '0.00', '0', ?)&quot;);</span>
+//           pst.setString(1, role);
+           
+
+<span class="fc" id="L89">			pst.setString(1, car_id);</span>
+<span class="fc" id="L90">			pst.setString(2, user_name);</span>
+<span class="fc" id="L91">			pst.setString(3, start_date);</span>
+<span class="fc" id="L92">			pst.setString(4, start_time);</span>
+<span class="fc" id="L93">			pst.setString(5, end_date);</span>
+<span class="fc" id="L94">			pst.setString(6, end_time);</span>
+<span class="fc" id="L95">			pst.setString(7,has_gps);</span>
+<span class="fc" id="L96">			pst.setString(8, has_on_star);</span>
+<span class="fc" id="L97">			pst.setString(9, has_sirius_xm);</span>
+<span class="fc" id="L98">			pst.setString(10, is_arlington_club_member);</span>
+<span class="fc" id="L99">			pst.setDouble(11, Double.parseDouble(amount));</span>
+<span class="fc" id="L100">			pst.setDouble(12, Double.parseDouble(amount));</span>
+<span class="fc" id="L101">			pst.executeUpdate();</span>
+			
+			
+<span class="fc" id="L104">	          qry = conn.prepareStatement(&quot;select role_id from user_roles where user_name = ?&quot;);</span>
+<span class="fc" id="L105">	          qry.setString(1, username);</span>
+<span class="fc" id="L106">	          qrs = qry.executeQuery();</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">	          while(qrs.next()){</span>
+<span class="fc" id="L108">	        	   temp = qrs.getString(1);</span>
+	      
+<span class="fc" id="L110">	          qry = conn.prepareStatement(&quot;select role_name from roles where role_id = ?&quot;);</span>
+<span class="fc" id="L111">	          qry.setString(1, temp);</span>
+<span class="fc" id="L112">	          qrs = qry.executeQuery();</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">	          while(qrs.next()){</span>
+<span class="fc" id="L114">	        	   temp = qrs.getString(1);</span>
+			
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">			if(temp.equals(&quot;Admin&quot;))</span>
+        	{
+<span class="nc" id="L118">	            RequestDispatcher rd=request.getRequestDispatcher(&quot;adminhome.jsp&quot;);  </span>
+<span class="nc" id="L119">	            rd.forward(request,response);  </span>
+<span class="nc" id="L120">	        	}</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">	        	else if(temp.equals(&quot;Rental Manager&quot;))</span>
+	        	{
+<span class="nc" id="L123">	            RequestDispatcher rd=request.getRequestDispatcher(&quot;rentalmanagerhome.jsp&quot;);  </span>
+<span class="nc" id="L124">	            rd.forward(request,response);  </span>
+<span class="nc" id="L125">	        	}</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">	        	else if(temp.equals(&quot;User&quot;))</span>
+	        	{
+<span class="fc" id="L128">	            RequestDispatcher rd=request.getRequestDispatcher(&quot;userhome.jsp&quot;);  </span>
+<span class="fc" id="L129">	            rd.forward(request,response);  </span>
+	        	}	
+<span class="fc" id="L131">		        out.print(&quot;&lt;p style=\&quot;color:red\&quot;&gt;Record Successfully added&lt;/p&gt;&quot;);</span>
+<span class="fc" id="L132">		        pst.close();</span>
+<span class="fc" id="L133">		        qry.close();</span>
+<span class="fc" id="L134">				conn.close();</span>
+			 }
+	          }
+<span class="nc" id="L137">   }</span>
+<span class="fc" id="L138">       catch (Exception e) {</span>
+<span class="fc" id="L139">           System.out.println(e);</span>
+       } finally {
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">           if (conn != null) {</span>
+               try {
+<span class="fc" id="L143">                   conn.close();</span>
+<span class="pc" id="L144">               } catch (SQLException e) {</span>
+<span class="nc" id="L145">                   e.printStackTrace();</span>
+               }
+           }
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">           if (pst != null) {</span>
+               try {
+<span class="fc" id="L150">                   pst.close();</span>
+<span class="pc" id="L151">               } catch (SQLException e) {</span>
+<span class="nc" id="L152">                   e.printStackTrace();</span>
+               }
+           }
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">           if (rs != null) {</span>
+               try {
+<span class="nc" id="L157">                   rs.close();</span>
+<span class="nc" id="L158">               } catch (SQLException e) {</span>
+<span class="nc" id="L159">                   e.printStackTrace();</span>
+               }
+           }   
+       } 
+   }
+<span class="fc" id="L164">  }</span>
+ }
+   
+
+ 
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 1, 2018 2:51:35 PM)</div></body></html>

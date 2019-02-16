@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CarRental_AddCar_Error.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 1, 2018 2:51:35 PM)</a> &gt; <a href="../../index.html" class="el_group">Car rental testing</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">CarRental_AddCar_Error.java</span></div><h1>CarRental_AddCar_Error.java</h1><pre class="source lang-java linenums">package tests;
+
+import java.util.concurrent.TimeUnit;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+import java.util.Properties;
+
+import static org.junit.Assert.*;
+
+import java.io.FileInputStream;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import functions.Car_Rental_Test;
+import java.util.Random;
+
+<span class="nc" id="L25">public class CarRental_AddCar_Error extends Car_Rental_Test {</span>
+  
+  private String baseUrl;
+<span class="nc" id="L28">  private boolean acceptNextAlert = true;</span>
+<span class="nc" id="L29">  private StringBuffer verificationErrors = new StringBuffer();</span>
+  public static String sAppURL, sSharedUIMapPath;
+<span class="nc" id="L31">  Random dLicense = new Random();</span>
+  int drivingLicense;
+  String drivingLicenseString;
+  
+  @Before
+  public void setUp() throws Exception {
+<span class="nc" id="L37">	System.setProperty(&quot;webdriver.firefox.marionette&quot;,&quot;C:\\GeckoSelenium\\geckodriver.exe&quot;);</span>
+<span class="nc" id="L38">    driver = new FirefoxDriver();</span>
+<span class="nc" id="L39">    prop = new Properties();</span>
+<span class="nc" id="L40">    prop.load(new FileInputStream(&quot;./Configuration/HA_Configuration.properties&quot;));</span>
+<span class="nc" id="L41">    sAppURL = prop.getProperty(&quot;sAppURL&quot;);</span>
+<span class="nc" id="L42">    sSharedUIMapPath = prop.getProperty(&quot;SharedUIMap&quot;);</span>
+<span class="nc" id="L43">    prop.load(new FileInputStream(sSharedUIMapPath));</span>
+<span class="nc" id="L44">  }</span>
+
+  @Test
+  public void testMyFirstWebDriver() throws Exception {
+<span class="nc" id="L48">	driver.get(sAppURL);</span>
+<span class="nc" id="L49">	Login(driver, &quot;nandit&quot;, &quot;Root-123&quot;);</span>
+<span class="nc" id="L50">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_AddCar&quot;))).click();</span>
+<span class="nc" id="L51">	AddCar(driver, &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;);</span>
+<span class="nc" id="L52">	String err=driver.findElement(By.xpath(prop.getProperty(&quot;Mandatory_Fields_Error_msg_car&quot;))).getText();</span>
+<span class="nc" id="L53">	assertEquals(&quot;All fileds are mandatory&quot;,err);</span>
+<span class="nc" id="L54">	AddCar(driver, &quot;Test_Car&quot;,&quot;56&quot;,&quot;20.00&quot;,&quot;25.00&quot;,&quot;140.00&quot;,&quot;5.00&quot;,&quot;5.00&quot;,&quot;5.00&quot;);</span>
+<span class="nc" id="L55">	err=driver.findElement(By.xpath(prop.getProperty(&quot;Capacity_Field_Error_msg_car&quot;))).getText();</span>
+<span class="nc" id="L56">	assertEquals(&quot;Maximum Capacity is 25&quot;,err);</span>
+<span class="nc" id="L57">	AddCar(driver, &quot;Test_Car&quot;,&quot;10&quot;,&quot;20&quot;,&quot;25.00&quot;,&quot;140.00&quot;,&quot;5.00&quot;,&quot;5.00&quot;,&quot;5.00&quot;);</span>
+<span class="nc" id="L58">	err=driver.findElement(By.xpath(prop.getProperty(&quot;Weekday_Rate_Error_msg_car&quot;))).getText();</span>
+<span class="nc" id="L59">	assertEquals(&quot;Use Valid Currency Format&quot;,err);</span>
+<span class="nc" id="L60">	AddCar(driver, &quot;Test_Car&quot;,&quot;10&quot;,&quot;20.00&quot;,&quot;25&quot;,&quot;140.00&quot;,&quot;5.00&quot;,&quot;5.00&quot;,&quot;5.00&quot;);</span>
+<span class="nc" id="L61">	err=driver.findElement(By.xpath(prop.getProperty(&quot;Weekend_Rate_Error_msg_car&quot;))).getText();</span>
+<span class="nc" id="L62">	assertEquals(&quot;Use Valid Currency Format&quot;,err);</span>
+<span class="nc" id="L63">	AddCar(driver, &quot;Test_Car&quot;,&quot;10&quot;,&quot;20.00&quot;,&quot;25.00&quot;,&quot;140&quot;,&quot;5.00&quot;,&quot;5.00&quot;,&quot;5.00&quot;);</span>
+<span class="nc" id="L64">	err=driver.findElement(By.xpath(prop.getProperty(&quot;Weekly_Rate_Error_msg_car&quot;))).getText();</span>
+<span class="nc" id="L65">	assertEquals(&quot;Use Valid Currency Format&quot;,err);</span>
+<span class="nc" id="L66">	AddCar(driver, &quot;Test_Car&quot;,&quot;10&quot;,&quot;20.00&quot;,&quot;25.00&quot;,&quot;140.00&quot;,&quot;5&quot;,&quot;5.00&quot;,&quot;5.00&quot;);</span>
+<span class="nc" id="L67">	err=driver.findElement(By.xpath(prop.getProperty(&quot;GPS_Rate_Error_msg_car&quot;))).getText();</span>
+<span class="nc" id="L68">	assertEquals(&quot;Use Valid Currency Format&quot;,err);</span>
+<span class="nc" id="L69">	AddCar(driver, &quot;Test_Car&quot;,&quot;10&quot;,&quot;20.00&quot;,&quot;25.00&quot;,&quot;140.00&quot;,&quot;5.00&quot;,&quot;5&quot;,&quot;5.00&quot;);</span>
+<span class="nc" id="L70">	err=driver.findElement(By.xpath(prop.getProperty(&quot;Onstar_Rate_Error_msg_car&quot;))).getText();</span>
+<span class="nc" id="L71">	assertEquals(&quot;Use Valid Currency Format&quot;,err);</span>
+<span class="nc" id="L72">	AddCar(driver, &quot;Test_Car&quot;,&quot;10&quot;,&quot;20.00&quot;,&quot;25.00&quot;,&quot;140.00&quot;,&quot;5.00&quot;,&quot;5.00&quot;,&quot;5&quot;);</span>
+<span class="nc" id="L73">	err=driver.findElement(By.xpath(prop.getProperty(&quot;SirusXm_Rate_Error_msg_car&quot;))).getText();</span>
+<span class="nc" id="L74">	assertEquals(&quot;Use Valid Currency Format&quot;,err);</span>
+<span class="nc" id="L75">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_addCar_GotoHomePage&quot;))).click();</span>
+	
+	
+<span class="nc" id="L78">  }</span>
+
+  @After
+  public void tearDown() throws Exception {
+<span class="nc" id="L82">    driver.quit();</span>
+<span class="nc" id="L83">    String verificationErrorString = verificationErrors.toString();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">    if (!&quot;&quot;.equals(verificationErrorString)) {</span>
+<span class="nc" id="L85">      fail(verificationErrorString);</span>
+    }
+<span class="nc" id="L87">  }</span>
+
+  private boolean isElementPresent(By by) {
+    try {
+<span class="nc" id="L91">      driver.findElement(by);</span>
+<span class="nc" id="L92">      return true;</span>
+<span class="nc" id="L93">    } catch (NoSuchElementException e) {</span>
+<span class="nc" id="L94">      return false;</span>
+    }
+  }
+
+  private boolean isAlertPresent() {
+    try {
+<span class="nc" id="L100">      driver.switchTo().alert();</span>
+<span class="nc" id="L101">      return true;</span>
+<span class="nc" id="L102">    } catch (NoAlertPresentException e) {</span>
+<span class="nc" id="L103">      return false;</span>
+    }
+  }
+
+  private String closeAlertAndGetItsText() {
+    try {
+<span class="nc" id="L109">      Alert alert = driver.switchTo().alert();</span>
+<span class="nc" id="L110">      String alertText = alert.getText();</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">      if (acceptNextAlert) {</span>
+<span class="nc" id="L112">        alert.accept();</span>
+<span class="nc" id="L113">      } else {</span>
+<span class="nc" id="L114">        alert.dismiss();</span>
+      }
+<span class="nc" id="L116">      return alertText;</span>
+    } finally {
+<span class="nc" id="L118">      acceptNextAlert = true;</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 1, 2018 2:51:35 PM)</div></body></html>

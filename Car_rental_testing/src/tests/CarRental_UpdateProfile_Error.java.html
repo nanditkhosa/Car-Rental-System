@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CarRental_UpdateProfile_Error.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 1, 2018 2:51:35 PM)</a> &gt; <a href="../../index.html" class="el_group">Car rental testing</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">CarRental_UpdateProfile_Error.java</span></div><h1>CarRental_UpdateProfile_Error.java</h1><pre class="source lang-java linenums">package tests;
+
+import java.util.concurrent.TimeUnit;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+import java.util.Properties;
+
+import static org.junit.Assert.*;
+
+import java.io.FileInputStream;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import functions.Car_Rental_Test;
+import java.util.Random;
+
+<span class="nc" id="L25">public class CarRental_UpdateProfile_Error extends Car_Rental_Test {</span>
+  
+  private String baseUrl;
+<span class="nc" id="L28">  private boolean acceptNextAlert = true;</span>
+<span class="nc" id="L29">  private StringBuffer verificationErrors = new StringBuffer();</span>
+  public static String sAppURL, sSharedUIMapPath;
+<span class="nc" id="L31">  Random dLicense = new Random();</span>
+  int drivingLicense;
+  String drivingLicenseString;
+  
+  @Before
+  public void setUp() throws Exception {
+<span class="nc" id="L37">	System.setProperty(&quot;webdriver.firefox.marionette&quot;,&quot;C:\\GeckoSelenium\\geckodriver.exe&quot;);</span>
+<span class="nc" id="L38">    driver = new FirefoxDriver();</span>
+<span class="nc" id="L39">    prop = new Properties();</span>
+<span class="nc" id="L40">    prop.load(new FileInputStream(&quot;./Configuration/HA_Configuration.properties&quot;));</span>
+<span class="nc" id="L41">    sAppURL = prop.getProperty(&quot;sAppURL&quot;);</span>
+<span class="nc" id="L42">    sSharedUIMapPath = prop.getProperty(&quot;SharedUIMap&quot;);</span>
+<span class="nc" id="L43">    prop.load(new FileInputStream(sSharedUIMapPath));</span>
+<span class="nc" id="L44">  }</span>
+
+  @Test
+  public void testMyFirstWebDriver() throws Exception {
+<span class="nc" id="L48">	driver.get(sAppURL);</span>
+<span class="nc" id="L49">	Login(driver, &quot;sreekar&quot;, &quot;Root-123&quot;);</span>
+<span class="nc" id="L50">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_ManagerUpdateProfile&quot;))).click();</span>
+<span class="nc" id="L51">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Username&quot;))).clear();</span>
+<span class="nc" id="L52">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Profile&quot;))).click();</span>
+<span class="nc" id="L53">	String err=driver.findElement(By.xpath(prop.getProperty(&quot;Mandatory_Fields_Error_msg&quot;))).getText();</span>
+<span class="nc" id="L54">	assertEquals(&quot;All fields are mandatory&quot;,err);</span>
+<span class="nc" id="L55">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Username&quot;))).clear();</span>
+<span class="nc" id="L56">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Username&quot;))).sendKeys(&quot;sr&quot;);</span>
+<span class="nc" id="L57">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Profile&quot;))).click();</span>
+<span class="nc" id="L58">	err=driver.findElement(By.xpath(prop.getProperty(&quot;name_field_error_msg&quot;))).getText();</span>
+<span class="nc" id="L59">	assertEquals(&quot;Must be greatar than 5 char&quot;,err);</span>
+<span class="nc" id="L60">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Password&quot;))).clear();</span>
+<span class="nc" id="L61">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Password&quot;))).sendKeys(&quot;sr&quot;);</span>
+<span class="nc" id="L62">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Profile&quot;))).click();</span>
+<span class="nc" id="L63">	err=driver.findElement(By.xpath(prop.getProperty(&quot;password_field_error_msg&quot;))).getText();</span>
+<span class="nc" id="L64">	assertEquals(&quot;Must be greater than 6 char&quot;,err);</span>
+<span class="nc" id="L65">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Password&quot;))).clear();</span>
+<span class="nc" id="L66">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Password&quot;))).sendKeys(&quot;Root123&quot;);</span>
+<span class="nc" id="L67">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Profile&quot;))).click();</span>
+<span class="nc" id="L68">	err=driver.findElement(By.xpath(prop.getProperty(&quot;password_field_error_msg&quot;))).getText();</span>
+<span class="nc" id="L69">	assertEquals(&quot;Must have at least One Special Character&quot;,err);</span>
+<span class="nc" id="L70">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_UTAID&quot;))).clear();</span>
+<span class="nc" id="L71">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_UTAID&quot;))).sendKeys(&quot;1001234&quot;);</span>
+<span class="nc" id="L72">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Profile&quot;))).click();</span>
+<span class="nc" id="L73">	err=driver.findElement(By.xpath(prop.getProperty(&quot;utaid_field_error_msg&quot;))).getText();</span>
+<span class="nc" id="L74">	assertEquals(&quot;Must be a 10 Digit Number Only&quot;,err);</span>
+<span class="nc" id="L75">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_DOB&quot;))).clear();</span>
+<span class="nc" id="L76">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_DOB&quot;))).sendKeys(&quot;12/1234&quot;);</span>
+<span class="nc" id="L77">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Profile&quot;))).click();</span>
+<span class="nc" id="L78">	err=driver.findElement(By.xpath(prop.getProperty(&quot;dateofbirth_error_msg&quot;))).getText();</span>
+<span class="nc" id="L79">	assertEquals(&quot;Must be Valid Date Format&quot;,err);</span>
+<span class="nc" id="L80">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Firstname&quot;))).clear();</span>
+<span class="nc" id="L81">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Firstname&quot;))).sendKeys(&quot;sre*&quot;);</span>
+<span class="nc" id="L82">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Profile&quot;))).click();</span>
+<span class="nc" id="L83">	err=driver.findElement(By.xpath(prop.getProperty(&quot;firstname_error_msg&quot;))).getText();</span>
+<span class="nc" id="L84">	assertEquals(&quot;Must contain Alphabets Only&quot;,err);</span>
+<span class="nc" id="L85">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_LastName&quot;))).clear();</span>
+<span class="nc" id="L86">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_LastName&quot;))).sendKeys(&quot;sre*&quot;);</span>
+<span class="nc" id="L87">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Profile&quot;))).click();</span>
+<span class="nc" id="L88">	err=driver.findElement(By.xpath(prop.getProperty(&quot;lastname_error_msg&quot;))).getText();</span>
+<span class="nc" id="L89">	assertEquals(&quot;Must contain Alphabets Only&quot;,err);</span>
+<span class="nc" id="L90">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_PhoneNumber&quot;))).clear();</span>
+<span class="nc" id="L91">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_PhoneNumber&quot;))).sendKeys(&quot;23477&quot;);</span>
+<span class="nc" id="L92">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Profile&quot;))).click();</span>
+<span class="nc" id="L93">	err=driver.findElement(By.xpath(prop.getProperty(&quot;phonenumber_error_msg&quot;))).getText();</span>
+<span class="nc" id="L94">	assertEquals(&quot;Must be 10 Digits in Length&quot;,err);</span>
+<span class="nc" id="L95">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Email&quot;))).clear();</span>
+<span class="nc" id="L96">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Email&quot;))).sendKeys(&quot;sreekar&quot;);</span>
+<span class="nc" id="L97">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Profile&quot;))).click();</span>
+<span class="nc" id="L98">	err=driver.findElement(By.xpath(prop.getProperty(&quot;email_error_msg&quot;))).getText();</span>
+<span class="nc" id="L99">	assertEquals(&quot;Must be valid e-mail format&quot;,err);</span>
+<span class="nc" id="L100">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_DrivingLicense&quot;))).clear();</span>
+<span class="nc" id="L101">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_DrivingLicense&quot;))).sendKeys(&quot;1234&quot;);</span>
+<span class="nc" id="L102">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Profile&quot;))).click();</span>
+<span class="nc" id="L103">	err=driver.findElement(By.xpath(prop.getProperty(&quot;dl_error_msg&quot;))).getText();</span>
+<span class="nc" id="L104">	assertEquals(&quot;Must be 8 digits in length&quot;,err);</span>
+<span class="nc" id="L105">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Address&quot;))).clear();</span>
+<span class="nc" id="L106">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Address&quot;))).sendKeys(&quot;1234&quot;);</span>
+<span class="nc" id="L107">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Profile&quot;))).click();</span>
+<span class="nc" id="L108">	err=driver.findElement(By.xpath(prop.getProperty(&quot;address_error_msg&quot;))).getText();</span>
+<span class="nc" id="L109">	assertEquals(&quot;Must Contain Minimum 10 Characters&quot;,err);</span>
+	
+	
+<span class="nc" id="L112">  }</span>
+
+  @After
+  public void tearDown() throws Exception {
+<span class="nc" id="L116">   driver.quit();</span>
+<span class="nc" id="L117">    String verificationErrorString = verificationErrors.toString();</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">    if (!&quot;&quot;.equals(verificationErrorString)) {</span>
+<span class="nc" id="L119">      fail(verificationErrorString);</span>
+    }
+<span class="nc" id="L121">  }</span>
+
+  private boolean isElementPresent(By by) {
+    try {
+<span class="nc" id="L125">      driver.findElement(by);</span>
+<span class="nc" id="L126">      return true;</span>
+<span class="nc" id="L127">    } catch (NoSuchElementException e) {</span>
+<span class="nc" id="L128">      return false;</span>
+    }
+  }
+
+  private boolean isAlertPresent() {
+    try {
+<span class="nc" id="L134">      driver.switchTo().alert();</span>
+<span class="nc" id="L135">      return true;</span>
+<span class="nc" id="L136">    } catch (NoAlertPresentException e) {</span>
+<span class="nc" id="L137">      return false;</span>
+    }
+  }
+
+  private String closeAlertAndGetItsText() {
+    try {
+<span class="nc" id="L143">      Alert alert = driver.switchTo().alert();</span>
+<span class="nc" id="L144">      String alertText = alert.getText();</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">      if (acceptNextAlert) {</span>
+<span class="nc" id="L146">        alert.accept();</span>
+<span class="nc" id="L147">      } else {</span>
+<span class="nc" id="L148">        alert.dismiss();</span>
+      }
+<span class="nc" id="L150">      return alertText;</span>
+    } finally {
+<span class="nc" id="L152">      acceptNextAlert = true;</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 1, 2018 2:51:35 PM)</div></body></html>

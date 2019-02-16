@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AddcarServlet.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 1, 2018 2:51:35 PM)</a> &gt; <a href="../../index.html" class="el_group">Car rental testing</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">FirstProject.controller</a> &gt; <span class="el_source">AddcarServlet.java</span></div><h1>AddcarServlet.java</h1><pre class="source lang-java linenums">package FirstProject.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import Car_Rental_Util.sqlconnector;
+import FirstProject.model.RegisterErrors;
+import FirstProject.model.addCarError;
+import Car_Rental_Util.sqlconnector;
+import java.util.Random;
+import java.util.regex.Pattern;
+
+<span class="fc" id="L25">public class AddcarServlet extends HttpServlet {</span>
+	 private static final long serialVersionUID = 1L;
+	 
+ protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  // TODO Auto-generated method stub
+<span class="fc" id="L30">  response.setContentType(&quot;text/html&quot;);</span>
+<span class="fc" id="L31">  PrintWriter out = response.getWriter();</span>
+<span class="fc" id="L32">  String carname = request.getParameter(&quot;carname&quot;);</span>
+<span class="fc" id="L33">  String capacity = request.getParameter(&quot;capacity&quot;);</span>
+<span class="fc" id="L34">  String weekdayrate = request.getParameter(&quot;weekdayrate&quot;);</span>
+<span class="fc" id="L35">  String weekendrate = request.getParameter(&quot;weekendrate&quot;);</span>
+<span class="fc" id="L36">  String weeklyrate = request.getParameter(&quot;weeklyrate&quot;);</span>
+<span class="fc" id="L37">  String gpsrate = request.getParameter(&quot;gpsrate&quot;);</span>
+<span class="fc" id="L38">  String onstarrate = request.getParameter(&quot;onstarrate&quot;);</span>
+<span class="fc" id="L39">  String siriusxmrate = request.getParameter(&quot;siriusxmrate&quot;);</span>
+  
+<span class="fc" id="L41">  addCarError ae = new addCarError();</span>
+<span class="fc" id="L42">  ae = ae.setErrorMsg(carname, capacity, weekdayrate, weekendrate, weeklyrate, gpsrate, onstarrate, siriusxmrate);</span>
+  
+  
+<span class="fc bfc" id="L45" title="All 2 branches covered.">  if(ae.hasErrors == true){</span>
+<span class="fc" id="L46">	  RequestDispatcher rd20 = request.getRequestDispatcher(&quot;addcar.jsp&quot;);</span>
+<span class="fc" id="L47">	  request.setAttribute(&quot;errorList&quot;,ae);</span>
+<span class="fc" id="L48">	   rd20.forward(request, response);</span>
+<span class="fc" id="L49">  }</span>
+  
+  else {
+<span class="fc" id="L52">	  Connection conn = null;</span>
+<span class="fc" id="L53">      PreparedStatement pst = null;</span>
+<span class="fc" id="L54">      ResultSet rs = null;</span>
+
+   // inserting data into mysql database 
+   // create a test database and student table before running this to create table
+   //create table student(name varchar(100), userName varchar(100), pass varchar(100), addr varchar(100), age int, qual varchar(100), percent varchar(100), year varchar(100));
+   try {
+	   	
+	   
+<span class="fc" id="L62">	   	   int random = (int )(Math.random() * 100 + 20);</span>
+<span class="fc" id="L63">           conn = sqlconnector.connect();</span>
+           
+<span class="fc" id="L65">           pst = conn</span>
+<span class="fc" id="L66">                   .prepareStatement(&quot;insert into cars (car_name,capacity,weekday_rate,weekend_rate,weekly_rate,gps_rate,onstar_rate,siriusXM_rate) values(?,?,?,?,?,?,?,?)&quot;);</span>
+//           	pst.setInt(1, null);
+<span class="fc" id="L68">			pst.setString(1, carname);</span>
+<span class="fc" id="L69">			pst.setInt(2, Integer.parseInt(capacity));</span>
+<span class="fc" id="L70">			pst.setDouble(3, Double.parseDouble(weekdayrate));</span>
+<span class="fc" id="L71">			pst.setDouble(4, Double.parseDouble(weekendrate));</span>
+<span class="fc" id="L72">			pst.setDouble(5, Double.parseDouble(weeklyrate));</span>
+<span class="fc" id="L73">			pst.setDouble(6, Double.parseDouble(gpsrate));</span>
+<span class="fc" id="L74">			pst.setDouble(7, Double.parseDouble(onstarrate));</span>
+<span class="fc" id="L75">			pst.setDouble(8, Double.parseDouble(siriusxmrate));</span>
+			
+<span class="fc" id="L77">			pst.executeUpdate(); // execute it on test database</span>
+<span class="fc" id="L78">			System.out.println(&quot;Successfuly added new car&quot;);</span>
+			
+<span class="fc" id="L80">			conn.close();</span>
+			
+<span class="fc" id="L82">			RequestDispatcher rd=request.getRequestDispatcher(&quot;addcar.jsp&quot;);</span>
+<span class="fc" id="L83">			out.print(&quot;&lt;p style=\&quot;color:red\&quot;&gt;Car added successfully&lt;/p&gt;&quot;);</span>
+<span class="fc" id="L84">            rd.include(request,response); </span>
+<span class="fc" id="L85">       }</span>
+<span class="nc" id="L86">       catch (Exception e) {</span>
+<span class="nc" id="L87">           System.out.println(e);</span>
+       } finally {
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">           if (conn != null) {</span>
+               try {
+<span class="fc" id="L91">                   conn.close();</span>
+<span class="pc" id="L92">               } catch (SQLException e) {</span>
+<span class="nc" id="L93">                   e.printStackTrace();</span>
+               }
+           }
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">           if (pst != null) {</span>
+               try {
+<span class="fc" id="L98">                   pst.close();</span>
+<span class="pc" id="L99">               } catch (SQLException e) {</span>
+<span class="nc" id="L100">                   e.printStackTrace();</span>
+               }
+           }
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">           if (rs != null) {</span>
+               try {
+<span class="nc" id="L105">                   rs.close();</span>
+<span class="nc" id="L106">               } catch (SQLException e) {</span>
+<span class="nc" id="L107">                   e.printStackTrace();</span>
+               }
+           }   
+       } 
+   }
+<span class="fc" id="L112">  }</span>
+ }
+   
+
+ 
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 1, 2018 2:51:35 PM)</div></body></html>

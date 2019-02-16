@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AvailableCars.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 1, 2018 2:51:35 PM)</a> &gt; <a href="../../index.html" class="el_group">Car rental testing</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">FirstProject.model</a> &gt; <span class="el_source">AvailableCars.java</span></div><h1>AvailableCars.java</h1><pre class="source lang-java linenums">package FirstProject.model;
+
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+<span class="fc" id="L7">public class AvailableCars {</span>
+	
+	int car_id;
+	String car_name;
+	int capacity;
+	double weekday_rate;
+	double weekend_rate;
+	double weekly_rate;
+	double gps_rate;
+	double onstar_rate;
+	double sirusXM_rate;
+	double amount;
+	String pickupdate;
+	String dropoffdate;
+	String pickuptime;
+	String dropofftime;
+	String gps;
+	String onstar;
+	String siriusxp;
+	String clubmember;
+	public String getPickuptime() {
+<span class="nc" id="L28">		return pickuptime;</span>
+	}
+	public void setPickuptime(String pickuptime) {
+<span class="nc" id="L31">		this.pickuptime = pickuptime;</span>
+<span class="nc" id="L32">	}</span>
+	public String getDropofftime() {
+<span class="nc" id="L34">		return dropofftime;</span>
+	}
+	public void setDropofftime(String dropofftime) {
+<span class="nc" id="L37">		this.dropofftime = dropofftime;</span>
+<span class="nc" id="L38">	}</span>
+	public String getGps() {
+<span class="nc" id="L40">		return gps;</span>
+	}
+	public void setGps(String gps) {
+<span class="nc" id="L43">		this.gps = gps;</span>
+<span class="nc" id="L44">	}</span>
+	public String getOnstar() {
+<span class="nc" id="L46">		return onstar;</span>
+	}
+	public void setOnstar(String onstar) {
+<span class="nc" id="L49">		this.onstar = onstar;</span>
+<span class="nc" id="L50">	}</span>
+	public String getSiriusxp() {
+<span class="nc" id="L52">		return siriusxp;</span>
+	}
+	public void setSiriusxp(String siriusxp) {
+<span class="nc" id="L55">		this.siriusxp = siriusxp;</span>
+<span class="nc" id="L56">	}</span>
+	public String getClubmember() {
+<span class="nc" id="L58">		return clubmember;</span>
+	}
+	public void setClubmember(String clubmember) {
+<span class="nc" id="L61">		this.clubmember = clubmember;</span>
+<span class="nc" id="L62">	}</span>
+	public String getDropoffdate() {
+<span class="nc" id="L64">		return dropoffdate;</span>
+	}
+	public void setDropoffdate(String dropoffdate) {
+<span class="nc" id="L67">		this.dropoffdate = dropoffdate;</span>
+<span class="nc" id="L68">	}</span>
+	public String getPickupdate() {
+<span class="nc" id="L70">		return pickupdate;</span>
+	}
+	public void setPickupdate(String pickupdate) {
+<span class="nc" id="L73">		this.pickupdate = pickupdate;</span>
+<span class="nc" id="L74">	}</span>
+	public double getAmount() {
+<span class="nc" id="L76">		return amount;</span>
+	}
+	public void setAmount(double amount) {
+<span class="nc" id="L79">		this.amount = amount;</span>
+<span class="nc" id="L80">	}</span>
+	public int getCar_id() {
+<span class="nc" id="L82">		return car_id;</span>
+	}
+	public void setCar_id(int car_id) {
+<span class="nc" id="L85">		this.car_id = car_id;</span>
+<span class="nc" id="L86">	}</span>
+	public String getCar_name() {
+<span class="nc" id="L88">		return car_name;</span>
+	}
+	public void setCar_name(String car_name) {
+<span class="nc" id="L91">		this.car_name = car_name;</span>
+<span class="nc" id="L92">	}</span>
+	public int getCapacity() {
+<span class="nc" id="L94">		return capacity;</span>
+	}
+	public void setCapacity(int capacity) {
+<span class="nc" id="L97">		this.capacity = capacity;</span>
+<span class="nc" id="L98">	}</span>
+	public double getWeekday_rate() {
+<span class="nc" id="L100">		return weekday_rate;</span>
+	}
+	public void setWeekday_rate(double weekday_rate) {
+<span class="nc" id="L103">		this.weekday_rate = weekday_rate;</span>
+<span class="nc" id="L104">	}</span>
+	public double getWeekend_rate() {
+<span class="nc" id="L106">		return weekend_rate;</span>
+	}
+	public void setWeekend_rate(double weekend_rate) {
+<span class="nc" id="L109">		this.weekend_rate = weekend_rate;</span>
+<span class="nc" id="L110">	}</span>
+	public double getWeekly_rate() {
+<span class="nc" id="L112">		return weekly_rate;</span>
+	}
+	public void setWeekly_rate(double weekly_rate) {
+<span class="nc" id="L115">		this.weekly_rate = weekly_rate;</span>
+<span class="nc" id="L116">	}</span>
+	public double getGps_rate() {
+<span class="nc" id="L118">		return gps_rate;</span>
+	}
+	public void setGps_rate(double gps_rate) {
+<span class="nc" id="L121">		this.gps_rate = gps_rate;</span>
+<span class="nc" id="L122">	}</span>
+	public double getOnstar_rate() {
+<span class="nc" id="L124">		return onstar_rate;</span>
+	}
+	public void setOnstar_rate(double onstar_rate) {
+<span class="nc" id="L127">		this.onstar_rate = onstar_rate;</span>
+<span class="nc" id="L128">	}</span>
+	public double getSirusXM_rate() {
+<span class="nc" id="L130">		return sirusXM_rate;</span>
+	}
+	public void setSirusXM_rate(double sirusXM_rate) {
+<span class="nc" id="L133">		this.sirusXM_rate = sirusXM_rate;</span>
+<span class="nc" id="L134">	}</span>
+	
+	public static double payment_amount(double  Weekday_rate,double  Weekly_rate,double  gps_rate,double onstar_rate,double  sirusxm_rate,String pickupdate,String dropoffdate, String gps,String onstar, String sirusxm, String clubmember ) throws ParseException
+	 {
+<span class="fc" id="L138">	 	 double amount = 0;</span>
+<span class="fc" id="L139">	 	 SimpleDateFormat sdf1 = new SimpleDateFormat(&quot;yyyy/MM/dd&quot;);</span>
+<span class="fc" id="L140">	 	 java.util.Date pickup_date = sdf1.parse(pickupdate);</span>
+<span class="fc" id="L141">	 	 java.util.Date dropoff_date = sdf1.parse(dropoffdate);</span>
+<span class="fc" id="L142">	 	 long diff = dropoff_date.getTime()-pickup_date.getTime();</span>
+<span class="fc" id="L143">	 	 int days=(int)(diff / (1000 * 60 * 60 * 24));</span>
+<span class="fc" id="L144">	 	 System.out.println(gps);</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">	 	 if(Math.abs((days/7))==0)</span>
+	 	 {
+<span class="fc" id="L147">	 		 amount=(days%7)*Weekday_rate;</span>
+	 	 }
+<span class="fc bfc" id="L149" title="All 2 branches covered.">	 	 if(days/7!=0)</span>
+	 	 {
+<span class="fc" id="L151">	 		int weeks=days/7;</span>
+<span class="fc" id="L152">	 		 amount=(weeks*Weekly_rate) + (days - (weeks*7))*Weekday_rate;</span>
+	 	 }
+	 	 
+	 	 
+	 	 
+<span class="pc bpc" id="L157" title="1 of 4 branches missed.">	 	 if(gps!=null &amp;&amp; gps.equals(&quot;1&quot;))</span>
+	 	 {
+<span class="fc" id="L159">	 		 amount=amount+days*gps_rate;</span>
+	 	 }
+<span class="pc bpc" id="L161" title="1 of 4 branches missed.">	 	 if(onstar!=null &amp;&amp; onstar.equals(&quot;2&quot;))</span>
+	 	 {
+<span class="fc" id="L163">	 		 amount=amount+days*onstar_rate; </span>
+	 	 }
+<span class="pc bpc" id="L165" title="1 of 4 branches missed.">	 	 if(sirusxm!=null&amp;&amp;sirusxm.equals(&quot;3&quot;))</span>
+	 	 {
+<span class="fc" id="L167">	 		 amount=amount+days*sirusxm_rate;</span>
+	 	 }
+<span class="pc bpc" id="L169" title="1 of 4 branches missed.">	 	 if(clubmember!=null&amp;&amp;clubmember.equals(&quot;4&quot;))</span>
+	 	 {
+<span class="fc" id="L171">	 		 amount=amount- (0.01*amount);</span>
+	 	 }
+	 	 
+<span class="fc" id="L174">	 	 amount= amount+ (0.0825*amount);</span>
+
+<span class="fc" id="L176">	 	amount =Double.parseDouble(new DecimalFormat(&quot;##.##&quot;).format(amount));</span>
+<span class="fc" id="L177">	 	 return amount;</span>
+	 	   
+	 }
+	}
+
+	
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 1, 2018 2:51:35 PM)</div></body></html>

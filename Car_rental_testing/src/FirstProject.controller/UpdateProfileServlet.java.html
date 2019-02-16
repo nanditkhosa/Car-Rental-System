@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UpdateProfileServlet.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 1, 2018 2:51:35 PM)</a> &gt; <a href="../../index.html" class="el_group">Car rental testing</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">FirstProject.controller</a> &gt; <span class="el_source">UpdateProfileServlet.java</span></div><h1>UpdateProfileServlet.java</h1><pre class="source lang-java linenums">package FirstProject.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import Car_Rental_Util.sqlconnector;
+import FirstProject.model.LoginDAO;
+import FirstProject.model.RegisterErrors;
+import FirstProject.model.UserDetails;
+
+<span class="nc" id="L23">public class UpdateProfileServlet extends HttpServlet {</span>
+	 private static final long serialVersionUID = 1L;
+	 static String temp;
+	 
+ protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  // TODO Auto-generated method stub
+<span class="nc" id="L29">  response.setContentType(&quot;text/html&quot;);</span>
+<span class="nc" id="L30">  PrintWriter out = response.getWriter();</span>
+<span class="nc" id="L31">  String userName = request.getParameter(&quot;username&quot;);</span>
+<span class="nc" id="L32">  String password = request.getParameter(&quot;password&quot;);</span>
+<span class="nc" id="L33">  String utaid = request.getParameter(&quot;utaid&quot;);</span>
+<span class="nc" id="L34">  String firstname = request.getParameter(&quot;firstname&quot;);</span>
+<span class="nc" id="L35">  String lastname = request.getParameter(&quot;lastname&quot;);</span>
+<span class="nc" id="L36">  String dob = request.getParameter(&quot;dob&quot;);</span>
+<span class="nc" id="L37">  String phonenumber = request.getParameter(&quot;phonenumber&quot;);</span>
+<span class="nc" id="L38">  String email = request.getParameter(&quot;email&quot;);</span>
+<span class="nc" id="L39">  String dl = request.getParameter(&quot;dl&quot;);</span>
+<span class="nc" id="L40">  String address = request.getParameter(&quot;address&quot;);</span>
+<span class="nc" id="L41">  PreparedStatement qry = null;</span>
+<span class="nc" id="L42">  ResultSet qrs = null;</span>
+  
+<span class="nc" id="L44">  UserDetails ud = new UserDetails();</span>
+<span class="nc" id="L45">  RegisterErrors re = ud.setErrorMsg(userName, password, utaid, firstname, lastname, dob,  phonenumber, email, dl, address);</span>
+  // validate given input
+<span class="nc bnc" id="L47" title="All 2 branches missed.">  if (re.hasErrors) {</span>
+<span class="nc" id="L48">   RequestDispatcher rd = request.getRequestDispatcher(&quot;/EditProfileServlet&quot;);</span>
+<span class="nc" id="L49">   request.setAttribute(&quot;errorList&quot;,re);</span>
+<span class="nc" id="L50">   rd.forward(request, response);</span>
+<span class="nc" id="L51">  } else {</span>
+<span class="nc" id="L52">	  Connection conn = null;</span>
+<span class="nc" id="L53">      PreparedStatement pst = null;</span>
+<span class="nc" id="L54">      ResultSet rs = null;</span>
+
+   // inserting data into mysql database 
+   // create a test database and student table before running this to create table
+   //create table student(name varchar(100), userName varchar(100), pass varchar(100), addr varchar(100), age int, qual varchar(100), percent varchar(100), year varchar(100));
+   try {
+	   
+<span class="nc" id="L61">	   	   conn=sqlconnector.connect();</span>
+<span class="nc" id="L62">	   	   String username=(String) request.getSession().getAttribute(&quot;name&quot;);</span>
+<span class="nc" id="L63">           pst = conn.prepareStatement(&quot;UPDATE car_rental_testing.users SET user_name=?, usr_password=?, uta_id=?, first_name=?, last_name=?, date_of_birth=?, phone_number=?, email=?, address=?, driving_license_number=? WHERE user_name='&quot;+userName+&quot;'&quot;);</span>
+<span class="nc" id="L64">			pst.setString(1, userName);</span>
+<span class="nc" id="L65">			pst.setString(2, password);</span>
+<span class="nc" id="L66">			pst.setString(3, utaid);</span>
+<span class="nc" id="L67">			pst.setString(4, firstname);</span>
+<span class="nc" id="L68">			pst.setString(5, lastname);</span>
+<span class="nc" id="L69">			pst.setString(6, dob);</span>
+<span class="nc" id="L70">			pst.setString(7, phonenumber);</span>
+<span class="nc" id="L71">			pst.setString(8, email);</span>
+<span class="nc" id="L72">			pst.setString(9, address);</span>
+<span class="nc" id="L73">			pst.setString(10, dl);</span>
+			
+<span class="nc" id="L75">			pst.executeUpdate(); // execute it on test database</span>
+<span class="nc" id="L76">			System.out.println(&quot;successfuly inserted user&quot;);</span>
+	        
+	        
+			
+<span class="nc" id="L80">	          qry = conn.prepareStatement(&quot;select role_id from user_roles where user_name = ?&quot;);</span>
+<span class="nc" id="L81">	          qry.setString(1, username);</span>
+<span class="nc" id="L82">	          qrs = qry.executeQuery();</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">	          while(qrs.next()){</span>
+<span class="nc" id="L84">	        	   temp = qrs.getString(1);</span>
+	      
+<span class="nc" id="L86">	          qry = conn.prepareStatement(&quot;select role_name from roles where role_id = ?&quot;);</span>
+<span class="nc" id="L87">	          qry.setString(1, temp);</span>
+<span class="nc" id="L88">	          qrs = qry.executeQuery();</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">	          while(qrs.next()){</span>
+<span class="nc" id="L90">	        	   temp = qrs.getString(1);</span>
+    
+<span class="nc bnc" id="L92" title="All 2 branches missed.">			if(temp.equals(&quot;Admin&quot;))</span>
+        	{
+<span class="nc" id="L94">	            RequestDispatcher rd=request.getRequestDispatcher(&quot;adminhome.jsp&quot;);  </span>
+<span class="nc" id="L95">	            rd.forward(request,response);  </span>
+<span class="nc" id="L96">	        	}</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">	        	else if(temp.equals(&quot;Rental Manager&quot;))</span>
+	        	{
+<span class="nc" id="L99">	            RequestDispatcher rd=request.getRequestDispatcher(&quot;rentalmanagerhome.jsp&quot;);  </span>
+<span class="nc" id="L100">	            rd.forward(request,response);  </span>
+<span class="nc" id="L101">	        	}</span>
+	        	else
+	        	{
+<span class="nc" id="L104">	            RequestDispatcher rd=request.getRequestDispatcher(&quot;userhome.jsp&quot;);  </span>
+<span class="nc" id="L105">	            rd.forward(request,response);  </span>
+	        	}	
+<span class="nc" id="L107">			out.print(&quot;&lt;p style=\&quot;color:red\&quot;&gt;Record Successfully Updated&lt;/p&gt;&quot;); </span>
+	          }
+	          }
+<span class="nc" id="L110">	          pst.close();</span>
+<span class="nc" id="L111">	          conn.close();</span>
+<span class="nc" id="L112">   }</span>
+<span class="nc" id="L113">       catch (Exception e) {</span>
+<span class="nc" id="L114">           System.out.println(e);</span>
+       } finally {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">           if (conn != null) {</span>
+               try {
+<span class="nc" id="L118">                   conn.close();</span>
+<span class="nc" id="L119">               } catch (SQLException e) {</span>
+<span class="nc" id="L120">                   e.printStackTrace();</span>
+               }
+           }
+<span class="nc bnc" id="L123" title="All 2 branches missed.">           if (pst != null) {</span>
+               try {
+<span class="nc" id="L125">                   pst.close();</span>
+<span class="nc" id="L126">               } catch (SQLException e) {</span>
+<span class="nc" id="L127">                   e.printStackTrace();</span>
+               }
+           }
+<span class="nc bnc" id="L130" title="All 2 branches missed.">           if (rs != null) {</span>
+               try {
+<span class="nc" id="L132">                   rs.close();</span>
+<span class="nc" id="L133">               } catch (SQLException e) {</span>
+<span class="nc" id="L134">                   e.printStackTrace();</span>
+               }
+           }   
+       } 
+   }
+<span class="nc" id="L139">  }</span>
+ }
+   
+
+ 
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 1, 2018 2:51:35 PM)</div></body></html>

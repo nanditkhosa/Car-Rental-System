@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>carBooked.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 1, 2018 2:51:35 PM)</a> &gt; <a href="../../index.html" class="el_group">Car rental testing</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">FirstProject.model</a> &gt; <span class="el_source">carBooked.java</span></div><h1>carBooked.java</h1><pre class="source lang-java linenums">package FirstProject.model;
+
+import java.util.regex.Pattern;
+
+<span class="fc" id="L5">public class carBooked {</span>
+	
+	String cardnumber;
+	String cvv;
+	String expmonth;
+	String stardate;
+	String enddate;
+	String testyear;
+	String testmonth;
+
+	
+	public boolean setErrorMsg (String cardnumber, String cvv, String kmonth, String kyear){
+		
+<span class="fc" id="L18">		boolean hasErrors = false;</span>
+
+<span class="fc" id="L20">		   RegisterErrors re = new RegisterErrors();</span>
+		   
+<span class="fc bfc" id="L22" title="All 8 branches covered.">		   if (cardnumber.isEmpty() || cvv.isEmpty() || kmonth.isEmpty()||kyear.isEmpty()){</span>
+<span class="fc" id="L23">			   re.fnameError = &quot;Cant be Empty&quot;;</span>
+<span class="fc" id="L24">			   hasErrors = true;</span>
+<span class="fc" id="L25">				  return hasErrors;</span>
+			    }
+<span class="fc bfc" id="L27" title="All 2 branches covered.">		   else if (!cardnumber.matches(&quot;[0-9]+&quot;)){</span>
+<span class="fc" id="L28">			   re.fnameError = &quot;Has to be a number&quot;;</span>
+<span class="fc" id="L29">				  hasErrors = true;</span>
+<span class="fc" id="L30">				  return hasErrors;</span>
+				}
+<span class="fc bfc" id="L32" title="All 2 branches covered.">		   else if (cardnumber.length() != 16){</span>
+<span class="fc" id="L33">			   re.fnameError = &quot;Card number has to be 16 Digits&quot;;</span>
+<span class="fc" id="L34">			   hasErrors = true;</span>
+<span class="fc" id="L35">			   return hasErrors;</span>
+		   }
+<span class="fc bfc" id="L37" title="All 2 branches covered.">		   else if (!cvv.matches(&quot;[0-9]+&quot;)){</span>
+<span class="fc" id="L38">			   re.fnameError = &quot;CVV must conatin only numbers&quot;;</span>
+<span class="fc" id="L39">			   	  hasErrors = true;</span>
+<span class="fc" id="L40">			   	  return hasErrors;</span>
+		   }
+<span class="fc bfc" id="L42" title="All 2 branches covered.">		   else if (cvv.length() != 3){</span>
+<span class="fc" id="L43">			   re.fnameError = &quot;CVV has to be 3 digits only&quot;;</span>
+<span class="fc" id="L44">			   	  hasErrors = true;</span>
+<span class="fc" id="L45">			   	  return hasErrors;</span>
+		   }
+		   
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		   else if (!kyear.matches(&quot;[0-9]+&quot;)){</span>
+<span class="fc" id="L49">			   re.fnameError = &quot;Year has to follow correct format&quot;;</span>
+<span class="fc" id="L50">			   hasErrors = true;</span>
+<span class="fc" id="L51">		   	return hasErrors;</span>
+		   	
+		   }
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		   else if (kyear.length() != 4){</span>
+<span class="fc" id="L55">			   re.fnameError = &quot;Year has to be 4 digits&quot;;</span>
+<span class="fc" id="L56">			   hasErrors = true;</span>
+<span class="fc" id="L57">			   return hasErrors;</span>
+		   }
+		   
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		   else if (Integer.parseInt(kyear) &lt;= 2018){</span>
+<span class="fc" id="L61">			   re.fnameError = &quot;Use Valid Card&quot;;</span>
+<span class="fc" id="L62">			   hasErrors = true;</span>
+<span class="fc" id="L63">			   return hasErrors;</span>
+		   }
+		
+		   
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		   else if (Integer.parseInt(kmonth) &gt; 12){</span>
+<span class="fc" id="L68">			   re.fnameError = &quot;Use Valid Month Format&quot;;</span>
+<span class="fc" id="L69">			   hasErrors = true;</span>
+<span class="fc" id="L70">			   return hasErrors;</span>
+		   }
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		   else if (Integer.parseInt(kmonth) &lt; 1){</span>
+<span class="fc" id="L73">			   re.fnameError = &quot;Use Valid Month Format&quot;;</span>
+<span class="fc" id="L74">			   hasErrors = true;</span>
+<span class="fc" id="L75">			   return hasErrors;</span>
+		   }
+	
+		   else{
+<span class="fc" id="L79">			   hasErrors = false;</span>
+<span class="fc" id="L80">			   return hasErrors;</span>
+		   }
+		
+		
+	}
+	
+	int reservation_id;
+//	int car_id;
+	String user_name;
+	String car_name;
+	String start_date;
+	String end_date;
+	String start_time;
+	String end_time;
+	public String getstart_date() {
+<span class="fc" id="L95">		return start_date;</span>
+	}
+	public void setstart_date(String start_date) {
+<span class="fc" id="L98">		this.start_date = start_date;</span>
+<span class="fc" id="L99">	}</span>
+	public String getend_date() {
+<span class="fc" id="L101">		return end_date;</span>
+	}
+	public void setend_date(String end_date) {
+<span class="fc" id="L104">		this.end_date = end_date;</span>
+<span class="fc" id="L105">	}</span>
+	public String getstart_time() {
+<span class="fc" id="L107">		return start_time;</span>
+	}
+	public void setstart_time(String start_time) {
+<span class="fc" id="L110">		this.start_time = start_time;</span>
+<span class="fc" id="L111">	}</span>
+	public String getend_time() {
+<span class="fc" id="L113">		return end_time;</span>
+	}
+	public void setend_time(String end_time) {
+<span class="fc" id="L116">		this.end_time = end_time;</span>
+<span class="fc" id="L117">	}</span>
+	public String getcar_name() {
+<span class="fc" id="L119">		return car_name;</span>
+	}
+	public void setcar_name(String car_name) {
+<span class="fc" id="L122">		this.car_name = car_name;</span>
+<span class="fc" id="L123">	}</span>
+	public String getuser_name() {
+<span class="fc" id="L125">		return user_name;</span>
+	}
+	public void setuser_name(String user_name) {
+<span class="fc" id="L128">		this.user_name = user_name;</span>
+<span class="fc" id="L129">	}</span>
+	public int getreservation_id() {
+<span class="fc" id="L131">		return reservation_id;</span>
+	}
+	public void setreservation_id(int reservation_id) {
+<span class="fc" id="L134">		this.reservation_id = reservation_id;</span>
+<span class="fc" id="L135">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 1, 2018 2:51:35 PM)</div></body></html>

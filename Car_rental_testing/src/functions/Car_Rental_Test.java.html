@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Car_Rental_Test.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 1, 2018 2:51:35 PM)</a> &gt; <a href="../../index.html" class="el_group">Car rental testing</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">functions</a> &gt; <span class="el_source">Car_Rental_Test.java</span></div><h1>Car_Rental_Test.java</h1><pre class="source lang-java linenums">package functions;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import java.util.Properties;
+ 
+<span class="nc" id="L9">public class Car_Rental_Test {   </span>
+	public static WebDriver driver;
+	public static Properties prop; 
+ public void Login (WebDriver driver, String sUserName, String sPassword) {
+<span class="nc" id="L13">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Login_Username&quot;))).clear();</span>
+<span class="nc" id="L14">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Login_Username&quot;))).sendKeys(sUserName);</span>
+<span class="nc" id="L15">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Login_Password&quot;))).clear();</span>
+<span class="nc" id="L16">	driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Login_Password&quot;))).sendKeys(sPassword);</span>
+<span class="nc" id="L17">	driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Login_Login&quot;))).click(); </span>
+<span class="nc" id="L18">	}  </span>
+	
+	public void UpdateProfile (WebDriver driver, String string, String string2, String string3,String string4,String string5,String string6,String string7,String string8,String string9,String string10){
+<span class="nc" id="L21">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Username&quot;))).clear();</span>
+<span class="nc" id="L22">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Username&quot;))).sendKeys(string);</span>
+<span class="nc" id="L23">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Password&quot;))).clear();</span>
+<span class="nc" id="L24">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Password&quot;))).sendKeys(string2);</span>
+<span class="nc" id="L25">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_UTAID&quot;))).clear();</span>
+<span class="nc" id="L26">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_UTAID&quot;))).sendKeys(string3);</span>
+<span class="nc" id="L27">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Firstname&quot;))).clear();</span>
+<span class="nc" id="L28">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Firstname&quot;))).sendKeys(string4);</span>
+<span class="nc" id="L29">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_LastName&quot;))).clear();</span>
+<span class="nc" id="L30">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_LastName&quot;))).sendKeys(string5);</span>
+<span class="nc" id="L31">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_DOB&quot;))).clear();</span>
+<span class="nc" id="L32">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_DOB&quot;))).sendKeys(string6);</span>
+<span class="nc" id="L33">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_PhoneNumber&quot;))).clear();</span>
+<span class="nc" id="L34">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_PhoneNumber&quot;))).sendKeys(string7);</span>
+<span class="nc" id="L35">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Email&quot;))).clear();</span>
+<span class="nc" id="L36">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Email&quot;))).sendKeys(string8);</span>
+<span class="nc" id="L37">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_DrivingLicense&quot;))).clear();</span>
+<span class="nc" id="L38">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_DrivingLicense&quot;))).sendKeys(string9);</span>
+<span class="nc" id="L39">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Address&quot;))).clear();</span>
+<span class="nc" id="L40">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Address&quot;))).sendKeys(string10);</span>
+<span class="nc" id="L41">	    driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Profile&quot;))).click();</span>
+	    
+<span class="nc" id="L43">	} </span>
+	
+	public void SearchAvailableCars (WebDriver driver, String string, String string2, String string3,String string4,String string5){
+<span class="nc" id="L46">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_PickupDate&quot;))).clear();</span>
+<span class="nc" id="L47">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_PickupDate&quot;))).sendKeys(string);</span>
+<span class="nc" id="L48">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_PickupTime&quot;))).clear();</span>
+<span class="nc" id="L49">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_PickupTime&quot;))).sendKeys(string2);</span>
+<span class="nc" id="L50">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_EndDate&quot;))).clear();</span>
+<span class="nc" id="L51">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_EndDate&quot;))).sendKeys(string3);</span>
+<span class="nc" id="L52">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_EndTime&quot;))).clear();</span>
+<span class="nc" id="L53">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_EndTime&quot;))).sendKeys(string4);</span>
+<span class="nc" id="L54">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Capacity&quot;))).clear();</span>
+<span class="nc" id="L55">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Capacity&quot;))).sendKeys(string5);</span>
+<span class="nc" id="L56">		driver.findElement(By.xpath(prop.getProperty(&quot;Chkbox_GPS&quot;))).click();</span>
+<span class="nc" id="L57">		driver.findElement(By.xpath(prop.getProperty(&quot;Chkbox_Onstar&quot;))).click();</span>
+<span class="nc" id="L58">	    driver.findElement(By.xpath(prop.getProperty(&quot;Btn_SearchCar&quot;))).click();</span>
+	    
+<span class="nc" id="L60">	} </span>
+	
+	public void EnterCardDetails (WebDriver driver, String string, String string2, String string3){
+<span class="nc" id="L63">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_CardNumber&quot;))).clear();</span>
+<span class="nc" id="L64">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_CardNumber&quot;))).sendKeys(string);</span>
+<span class="nc" id="L65">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_CVV&quot;))).clear();</span>
+<span class="nc" id="L66">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_CVV&quot;))).sendKeys(string2);</span>
+<span class="nc" id="L67">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Expiry_Date&quot;))).clear();</span>
+<span class="nc" id="L68">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_Expiry_Date&quot;))).sendKeys(string3);</span>
+<span class="nc" id="L69">	    driver.findElement(By.xpath(prop.getProperty(&quot;Btn_BookMyCar_Submit&quot;))).click();</span>
+	    
+<span class="nc" id="L71">	} </span>
+	
+	public void SearchCar (WebDriver driver, String string, String string2){
+<span class="nc" id="L74">		driver.findElement(By.xpath(prop.getProperty(&quot;TxtUsername&quot;))).clear();</span>
+<span class="nc" id="L75">		driver.findElement(By.xpath(prop.getProperty(&quot;TxtUsername&quot;))).sendKeys(string);</span>
+<span class="nc" id="L76">		driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Search&quot;))).click();</span>
+<span class="nc" id="L77">		driver.findElement(By.xpath(prop.getProperty(&quot;Btn_ManagerSearchRental&quot;))).click();</span>
+<span class="nc" id="L78">		driver.findElement(By.xpath(prop.getProperty(&quot;TxtRentalId&quot;))).clear();</span>
+<span class="nc" id="L79">		driver.findElement(By.xpath(prop.getProperty(&quot;TxtRentalId&quot;))).sendKeys(string2);</span>
+<span class="nc" id="L80">		driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Search&quot;))).click();</span>
+	    
+<span class="nc" id="L82">	} </span>
+	
+	public void AddCar (WebDriver driver, String string, String string2, String string3,String string4,String string5,String string6,String string7,String string8){
+<span class="nc" id="L85">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_CarName&quot;))).clear();</span>
+<span class="nc" id="L86">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_CarName&quot;))).sendKeys(string);</span>
+<span class="nc" id="L87">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_Capacity&quot;))).clear();</span>
+<span class="nc" id="L88">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_Capacity&quot;))).sendKeys(string2);</span>
+<span class="nc" id="L89">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_WeekdayRate&quot;))).clear();</span>
+<span class="nc" id="L90">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_WeekdayRate&quot;))).sendKeys(string3);</span>
+<span class="nc" id="L91">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_weekendRate&quot;))).clear();</span>
+<span class="nc" id="L92">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_weekendRate&quot;))).sendKeys(string4);</span>
+<span class="nc" id="L93">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_WeeklyRate&quot;))).clear();</span>
+<span class="nc" id="L94">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_WeeklyRate&quot;))).sendKeys(string5);</span>
+<span class="nc" id="L95">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_GPSRate&quot;))).clear();</span>
+<span class="nc" id="L96">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_GPSRate&quot;))).sendKeys(string6);</span>
+<span class="nc" id="L97">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_OnstarRate&quot;))).clear();</span>
+<span class="nc" id="L98">	    driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_OnstarRate&quot;))).sendKeys(string7);</span>
+<span class="nc" id="L99">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_SirusxmRate&quot;))).clear();</span>
+<span class="nc" id="L100">		driver.findElement(By.xpath(prop.getProperty(&quot;Txt_addCar_SirusxmRate&quot;))).sendKeys(string8);</span>
+<span class="nc" id="L101">	    driver.findElement(By.xpath(prop.getProperty(&quot;Btn_addCar&quot;))).click();</span>
+	    
+<span class="nc" id="L103">	} </span>
+
+} 
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 1, 2018 2:51:35 PM)</div></body></html>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CheckReserveRentalServlet.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Dec 1, 2018 2:51:35 PM)</a> &gt; <a href="../../index.html" class="el_group">Car rental testing</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">FirstProject.controller</a> &gt; <span class="el_source">CheckReserveRentalServlet.java</span></div><h1>CheckReserveRentalServlet.java</h1><pre class="source lang-java linenums">package FirstProject.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import Car_Rental_Util.sqlconnector;
+import FirstProject.model.ViewReportDAO;
+
+<span class="fc" id="L21">public class CheckReserveRentalServlet extends HttpServlet {</span>
+	 private static final long serialVersionUID = 1L;
+	 
+ protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  // TODO Auto-generated method stub
+<span class="fc" id="L26">  response.setContentType(&quot;text/html&quot;);</span>
+<span class="fc" id="L27">  PrintWriter out = response.getWriter();</span>
+<span class="fc" id="L28">  String username=(String) request.getSession().getAttribute(&quot;name&quot;);</span>
+  
+<span class="fc" id="L30">	  Connection conn = null;</span>
+<span class="fc" id="L31">      PreparedStatement pst = null;</span>
+<span class="fc" id="L32">      ResultSet rs = null;</span>
+
+   // inserting data into mysql database 
+   // create a test database and student table before running this to create table
+   //create table student(name varchar(100), userName varchar(100), pass varchar(100), addr varchar(100), age int, qual varchar(100), percent varchar(100), year varchar(100));
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">      if(username.isEmpty()){</span>
+<span class="nc" id="L38">			RequestDispatcher rd = request.getRequestDispatcher(&quot;index.jsp&quot;);</span>
+<span class="nc" id="L39">			   rd.include(request,response); </span>
+<span class="nc" id="L40">		}else{</span>
+		
+			try {
+					
+<span class="fc" id="L44">			   	   	conn=sqlconnector.connect();</span>
+	
+<span class="fc" id="L46">			   	   	pst = conn.prepareStatement(&quot;select is_revoked from users where user_name = ?&quot;);</span>
+<span class="fc" id="L47">			   	   	pst.setString(1, username);</span>
+<span class="fc" id="L48">			   	   	rs = pst.executeQuery();</span>
+<span class="fc" id="L49">			   	 String is_revok = null;</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">			   	   	while(rs.next()){</span>
+<span class="fc" id="L51">			   	   		is_revok = rs.getString(1);</span>
+			   	   	}
+<span class="fc bfc" id="L53" title="All 2 branches covered.">			   	   	if(is_revok.equals(&quot;1&quot;)){</span>
+<span class="fc" id="L54">				   	   	RequestDispatcher rd = request.getRequestDispatcher(&quot;userhome.jsp&quot;);</span>
+<span class="fc" id="L55">				   	 request.setAttribute(&quot;revokeError&quot;,&quot;Your rental reservation rights have been revoked&quot;);</span>
+<span class="fc" id="L56">					   rd.forward(request, response);</span>
+//					   	out.println(&quot;&lt;font color=red&gt;Your rental reservation rights have been revoked.&lt;/font&gt;&quot;);
+<span class="fc" id="L58">			   	   	}else{</span>
+<span class="fc" id="L59">					   	 RequestDispatcher rd = request.getRequestDispatcher(&quot;RequestRental.jsp&quot;);</span>
+<span class="fc" id="L60">					   	 rd.include(request,response); </span>
+			   	   	}
+<span class="pc" id="L62">			}catch(Exception ex){</span>
+<span class="nc" id="L63">				RequestDispatcher rd = request.getRequestDispatcher(&quot;userhome.jsp&quot;);</span>
+<span class="nc" id="L64">				out.println(&quot;&lt;font color=red&gt;Some error occurred.&lt;/font&gt;&quot;);</span>
+<span class="nc" id="L65">			   	rd.include(request,response); </span>
+			}
+		}
+ 
+
+<span class="fc" id="L70"> }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Dec 1, 2018 2:51:35 PM)</div></body></html>
